@@ -21,8 +21,8 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore BikeRent/BikeRent.sln
+      run: dotnet restore BikeRental/BikeRental.sln
     - name: Build
-      run: dotnet build --no-restore BikeRent/BikeRent.sln
+      run: dotnet build --no-restore BikeRental/BikeRental.sln
     - name: Test
-      run: dotnet test --no-restore BikeRent/BikeRent.sln
+      run: dotnet test --no-restore BikeRental/BikeRental.sln
