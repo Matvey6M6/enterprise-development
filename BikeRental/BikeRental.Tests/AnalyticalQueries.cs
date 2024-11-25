@@ -1,4 +1,4 @@
-using BikeRental.Domain.Enums;
+п»їusing BikeRental.Domain.Enums;
 using BikeRental.Domain.Model;
 using BikeRental.Tests.Fixture;
 
@@ -11,7 +11,7 @@ public class AnalyticalQueriesTests(TestFixture fixture) : IClassFixture<TestFix
     private List<Customer> _customers => fixture.Customers;
 
     /// <summary>
-    /// Вывести информацию обо всех спортивных велосипедах.
+    /// Р’С‹РІРµСЃС‚Рё РёРЅС„РѕСЂРјР°С†РёСЋ РѕР±Рѕ РІСЃРµС… СЃРїРѕСЂС‚РёРІРЅС‹С… РІРµР»РѕСЃРёРїРµРґР°С….
     /// </summary>
     [Fact]
     public void GetAllSportBikes()
@@ -23,7 +23,7 @@ public class AnalyticalQueriesTests(TestFixture fixture) : IClassFixture<TestFix
     }
 
     /// <summary>
-    /// Вывести информацию обо всех клиентах, которые брали в аренду горные велосипеды, упорядочить по ФИО.
+    /// Р’С‹РІРµСЃС‚Рё РёРЅС„РѕСЂРјР°С†РёСЋ РѕР±Рѕ РІСЃРµС… РєР»РёРµРЅС‚Р°С…, РєРѕС‚РѕСЂС‹Рµ Р±СЂР°Р»Рё РІ Р°СЂРµРЅРґСѓ РіРѕСЂРЅС‹Рµ РІРµР»РѕСЃРёРїРµРґС‹, СѓРїРѕСЂСЏРґРѕС‡РёС‚СЊ РїРѕ Р¤РРћ.
     /// </summary>
     [Fact]
     public void GetCustomersWithMountainBikesSortedByName()
@@ -40,7 +40,7 @@ public class AnalyticalQueriesTests(TestFixture fixture) : IClassFixture<TestFix
     }
 
     /// <summary>
-    /// Вывести суммарное время аренды велосипедов каждого типа.
+    /// Р’С‹РІРµСЃС‚Рё СЃСѓРјРјР°СЂРЅРѕРµ РІСЂРµРјСЏ Р°СЂРµРЅРґС‹ РІРµР»РѕСЃРёРїРµРґРѕРІ РєР°Р¶РґРѕРіРѕ С‚РёРїР°.
     /// </summary>
     [Fact]
     public void GetTotalRentalTimeByBikeType()
@@ -59,7 +59,7 @@ public class AnalyticalQueriesTests(TestFixture fixture) : IClassFixture<TestFix
     }
 
     /// <summary>
-    /// Вывести информацию о клиентах, бравших велосипеды на прокат больше всего раз.
+    /// Р’С‹РІРµСЃС‚Рё РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєР»РёРµРЅС‚Р°С…, Р±СЂР°РІС€РёС… РІРµР»РѕСЃРёРїРµРґС‹ РЅР° РїСЂРѕРєР°С‚ Р±РѕР»СЊС€Рµ РІСЃРµРіРѕ СЂР°Р·.
     /// </summary>
     [Fact]
     public void GetCustomersWithMostRentals()
@@ -79,7 +79,7 @@ public class AnalyticalQueriesTests(TestFixture fixture) : IClassFixture<TestFix
     }
 
     /// <summary>
-    /// Вывести информацию о топ 5 наиболее часто арендуемых велосипедов.
+    /// Р’С‹РІРµСЃС‚Рё РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С‚РѕРї 5 РЅР°РёР±РѕР»РµРµ С‡Р°СЃС‚Рѕ Р°СЂРµРЅРґСѓРµРјС‹С… РІРµР»РѕСЃРёРїРµРґРѕРІ.
     /// </summary>
     [Fact]
     public void GetTop5MostRentedBikes()
@@ -96,7 +96,7 @@ public class AnalyticalQueriesTests(TestFixture fixture) : IClassFixture<TestFix
     }
 
     /// <summary>
-    /// Вывести информацию о минимальном, максимальном и среднем времени аренды велосипедов.
+    /// Р’С‹РІРµСЃС‚Рё РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РјРёРЅРёРјР°Р»СЊРЅРѕРј, РјР°РєСЃРёРјР°Р»СЊРЅРѕРј Рё СЃСЂРµРґРЅРµРј РІСЂРµРјРµРЅРё Р°СЂРµРЅРґС‹ РІРµР»РѕСЃРёРїРµРґРѕРІ.
     /// </summary>
     [Fact]
     public void GetMinMaxAverageRentalTime()
