@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeRental.Domain", "Domain\BikeRental.Domain.csproj", "{6C133893-DFAA-4292-990B-099CF70C765E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeRental.Domain", "BikeRental.Domain\BikeRental.Domain.csproj", "{6C133893-DFAA-4292-990B-099CF70C765E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeRental.Infrastructure", "BikeRental.Infrastructure\BikeRental.Infrastructure.csproj", "{3F0578D1-02F5-43CB-BFAA-B4BC31990163}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeRental.Tests", "BikeRent.Tests\BikeRental.Tests.csproj", "{11B1C4A6-65E6-4E82-B8E5-A9261B60B545}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeRental.Tests", "BikeRental.Tests\BikeRental.Tests.csproj", "{11B1C4A6-65E6-4E82-B8E5-A9261B60B545}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

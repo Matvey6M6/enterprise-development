@@ -1,4 +1,4 @@
-﻿namespace BikeRental.Domain.Enums;
+namespace BikeRental.Domain.Enums;
 
 public enum BikeType
 {

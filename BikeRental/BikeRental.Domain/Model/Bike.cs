@@ -1,4 +1,4 @@
-﻿using BikeRental.Domain.Enums;
+using BikeRental.Domain.Enums;
 
 namespace BikeRental.Domain.Model;
 

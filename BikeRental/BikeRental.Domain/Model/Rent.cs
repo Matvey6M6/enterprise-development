@@ -1,4 +1,4 @@
-﻿namespace BikeRental.Domain.Model;
+namespace BikeRental.Domain.Model;
 
 /// <summary>
 /// Представляет запись об аренде велосипеда
