@@ -2,9 +2,9 @@ namespace BikeRental.Domain.Enums;
 
 public enum BikeType
 {
-    None = 0,
+    None,
 
-    // Гоный
+    // Горный
     Mountain,
 
     // Прогулочный

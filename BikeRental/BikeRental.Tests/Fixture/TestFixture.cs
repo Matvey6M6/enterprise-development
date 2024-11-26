@@ -11,9 +11,9 @@ public class TestFixture
 
     public TestFixture()
     {
-        Bikes = BikeRentalTest.GetBikes();
-        Rents = BikeRentalTest.GetRents();
-        Customers = BikeRentalTest.GetCustomers();
+        Bikes = BikeRentalSeeder.GetBikes();
+        Rents = BikeRentalSeeder.GetRents();
+        Customers = BikeRentalSeeder.GetCustomers();
     }
 }
 

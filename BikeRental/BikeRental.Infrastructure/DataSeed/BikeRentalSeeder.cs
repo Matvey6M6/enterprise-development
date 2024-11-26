@@ -3,7 +3,7 @@ using BikeRental.Domain.Model;
 
 namespace BikeRental.Infrastructure.DataSeed;
 
-public static class BikeRentalTest
+public static class BikeRentalSeeder
 {
     public static List<Bike> GetBikes()
     {
