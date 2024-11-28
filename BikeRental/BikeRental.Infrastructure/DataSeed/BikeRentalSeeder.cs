@@ -38,12 +38,12 @@ public static class BikeRentalSeeder
 
         return new List<Rent>
         {
-            new Rent { Id = 1, Bike = bikes[0], Customer = customers[0], Start = DateTime.Now.AddHours(-2), End = DateTime.Now.AddHours(2) },
-            new Rent { Id = 2, Bike = bikes[1], Customer = customers[1], Start = DateTime.Now.AddHours(-1), End = DateTime.Now.AddHours(3) },
-            new Rent { Id = 3, Bike = bikes[2], Customer = customers[2], Start = DateTime.Now.AddHours(-3), End = DateTime.Now.AddHours(1) },
-            new Rent { Id = 4, Bike = bikes[3], Customer = customers[3], Start = DateTime.Now.AddHours(-4), End = DateTime.Now.AddHours(4) },
-            new Rent { Id = 5, Bike = bikes[4], Customer = customers[4], Start = DateTime.Now.AddHours(-2), End = DateTime.Now.AddHours(6) },
-            new Rent { Id = 6, Bike = bikes[5], Customer = customers[5], Start = DateTime.Now.AddHours(-1), End = DateTime.Now.AddHours(5) }
+            new Rent { Id = 1, BikeId = bikes[0].SerialNumber, Bike = bikes[0], CustomerId = customers[0].Id, Customer = customers[0], Start = DateTime.Now.AddHours(-2), End = DateTime.Now.AddHours(2) },
+            new Rent { Id = 2, BikeId = bikes[1].SerialNumber, Bike = bikes[1], CustomerId = customers[1].Id, Customer = customers[1], Start = DateTime.Now.AddHours(-1), End = DateTime.Now.AddHours(3) },
+            new Rent { Id = 3, BikeId = bikes[2].SerialNumber, Bike = bikes[2], CustomerId = customers[2].Id, Customer = customers[2], Start = DateTime.Now.AddHours(-3), End = DateTime.Now.AddHours(1) },
+            new Rent { Id = 4, BikeId = bikes[3].SerialNumber, Bike = bikes[3], CustomerId = customers[3].Id, Customer = customers[3], Start = DateTime.Now.AddHours(-4), End = DateTime.Now.AddHours(4) },
+            new Rent { Id = 5, BikeId = bikes[4].SerialNumber, Bike = bikes[4], CustomerId = customers[4].Id, Customer = customers[4], Start = DateTime.Now.AddHours(-2), End = DateTime.Now.AddHours(6) },
+            new Rent { Id = 6, BikeId = bikes[5].SerialNumber, Bike = bikes[5], CustomerId = customers[5].Id, Customer = customers[5], Start = DateTime.Now.AddHours(-1), End = DateTime.Now.AddHours(5) }
 
         };
     }
