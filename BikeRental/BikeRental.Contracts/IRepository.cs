@@ -1,4 +1,6 @@
-﻿public interface IRepository<TEntity, in TKey>
+﻿namespace BikeRental.Contracts;
+
+public interface IRepository<TEntity, in TKey>
 {
     Task<List<TEntity>> GetAsList();
     Task<TEntity?> GetByKey(TKey key);

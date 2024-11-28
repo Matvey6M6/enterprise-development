@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BikeRental.Contracts\BikeRental.Contracts.csproj" />
     <ProjectReference Include="..\BikeRental.Domain\BikeRental.Domain.csproj" />
   </ItemGroup>
 

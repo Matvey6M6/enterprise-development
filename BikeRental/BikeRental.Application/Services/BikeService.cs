@@ -3,15 +3,8 @@ using BikeRental.Domain.Model;
 
 namespace BikeRental.Application.Services;
 
-public class BikeService : ICrudService<Bike, Bike, int>
+public class BikeService(IRepository<Bike, int> bikeRepository) : ICrudService<Bike, Bike, int>
 {
-    private readonly IRepository<Bike, int> _bikeRepository;
-
-    public BikeService(IRepository<Bike, int> bikeRepository)
-    {
-        _bikeRepository = bikeRepository;
-    }
-
     public async Task<Bike> Create(Bike newDto, CancellationToken cancellationToken)
     {
         var bike = new Bike
@@ -23,7 +16,7 @@ public class BikeService : ICrudService<Bike, Bike, int>
             CostPerPrice = newDto.CostPerPrice
         };
 
-        await _bikeRepository.Add(bike);
+        await bikeRepository.Add(bike);
         return new Bike
         {
             SerialNumber = bike.SerialNumber,
@@ -36,7 +29,7 @@ public class BikeService : ICrudService<Bike, Bike, int>
 
     public async Task<Bike> Update(int key, Bike newDto, CancellationToken cancellationToken)
     {
-        var bike = await _bikeRepository.GetByKey(key);
+        var bike = await bikeRepository.GetByKey(key);
 
         if (bike == null)
             throw new KeyNotFoundException("Bike not found.");
@@ -46,7 +39,7 @@ public class BikeService : ICrudService<Bike, Bike, int>
         bike.Color = newDto.Color;
         bike.CostPerPrice = newDto.CostPerPrice;
 
-        await _bikeRepository.Update(key, bike);
+        await bikeRepository.Update(key, bike);
         return new Bike
         {
             SerialNumber = bike.SerialNumber,
@@ -59,17 +52,17 @@ public class BikeService : ICrudService<Bike, Bike, int>
 
     public async Task<bool> Delete(int id, CancellationToken cancellationToken)
     {
-        var bike = await _bikeRepository.GetByKey(id);
+        var bike = await bikeRepository.GetByKey(id);
         if (bike == null)
             return false;
 
-        await _bikeRepository.Delete(id);
+        await bikeRepository.Delete(id);
         return true;
     }
 
     public async Task<IList<Bike>> GetList(CancellationToken cancellationToken)
     {
-        var bikes = await _bikeRepository.GetAsList();
+        var bikes = await bikeRepository.GetAsList();
         return bikes.Select(bike => new Bike
         {
             SerialNumber = bike.SerialNumber,
@@ -82,7 +75,7 @@ public class BikeService : ICrudService<Bike, Bike, int>
 
     public async Task<Bike?> GetById(int id, CancellationToken cancellationToken)
     {
-        var bike = await _bikeRepository.GetByKey(id);
+        var bike = await bikeRepository.GetByKey(id);
         if (bike == null)
             return null;
 

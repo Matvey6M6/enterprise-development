@@ -1,17 +1,11 @@
-﻿using BikeRental.Contracts.Customer;
+﻿using BikeRental.Contracts;
+using BikeRental.Contracts.Customer;
 using BikeRental.Domain.Model;
 
 namespace BikeRental.Application.Services;
 
-public class CustomerService
+public class CustomerService(IRepository<Customer, int> customerRepository): ICrudService<CustomerDto, CustomerCreateUpdateDto, int>
 {
-    private readonly IRepository<Customer, int> _customerRepository;
-
-    public CustomerService(IRepository<Customer, int> customerRepository)
-    {
-        _customerRepository = customerRepository;
-    }
-
     public async Task<CustomerDto> Create(CustomerCreateUpdateDto newDto, CancellationToken cancellationToken)
     {
         var customer = new Customer
@@ -22,7 +16,7 @@ public class CustomerService
             PhoneNumber = newDto.PhoneNumber
         };
 
-        await _customerRepository.Add(customer);
+        await customerRepository.Add(customer);
         return new CustomerDto
         {
             Id = customer.Id,
@@ -34,7 +28,7 @@ public class CustomerService
 
     public async Task<CustomerDto> Update(int key, CustomerCreateUpdateDto newDto, CancellationToken cancellationToken)
     {
-        var customer = await _customerRepository.GetByKey(key);
+        var customer = await customerRepository.GetByKey(key);
 
         if (customer == null)
             throw new KeyNotFoundException("Customer not found.");
@@ -43,7 +37,7 @@ public class CustomerService
         customer.BirthDate = newDto.BirthDate;
         customer.PhoneNumber = newDto.PhoneNumber;
 
-        await _customerRepository.Update(key, customer);
+        await customerRepository.Update(key, customer);
         return new CustomerDto
         {
             Id = customer.Id,
@@ -55,17 +49,17 @@ public class CustomerService
 
     public async Task<bool> Delete(int id, CancellationToken cancellationToken)
     {
-        var customer = await _customerRepository.GetByKey(id);
+        var customer = await customerRepository.GetByKey(id);
         if (customer == null)
             return false;
 
-        await _customerRepository.Delete(id);
+        await customerRepository.Delete(id);
         return true;
     }
 
     public async Task<IList<CustomerDto>> GetList(CancellationToken cancellationToken)
     {
-        var customers = await _customerRepository.GetAsList();
+        var customers = await customerRepository.GetAsList();
         return customers.Select(c => new CustomerDto
         {
             Id = c.Id,
@@ -77,7 +71,7 @@ public class CustomerService
 
     public async Task<CustomerDto?> GetById(int id, CancellationToken cancellationToken)
     {
-        var customer = await _customerRepository.GetByKey(id);
+        var customer = await customerRepository.GetByKey(id);
         if (customer == null)
             return null;
 
