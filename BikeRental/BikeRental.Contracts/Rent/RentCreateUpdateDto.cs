@@ -1,6 +1,4 @@
-﻿using BikeRental.Domain.Model;
-
-namespace BikeRental.Contracts.Rent;
+﻿namespace BikeRental.Contracts.Rent;
 
 public class RentCreateUpdateDto
 {
