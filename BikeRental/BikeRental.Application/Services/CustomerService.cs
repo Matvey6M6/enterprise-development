@@ -1,5 +1,6 @@
 ﻿using BikeRental.Contracts;
 using BikeRental.Contracts.Customer;
+using BikeRental.Domain.Interfaces;
 using BikeRental.Domain.Model;
 
 namespace BikeRental.Application.Services;

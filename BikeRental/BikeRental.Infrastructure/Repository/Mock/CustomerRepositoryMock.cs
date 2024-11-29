@@ -1,4 +1,5 @@
 ﻿using BikeRental.Contracts;
+using BikeRental.Domain.Interfaces;
 using BikeRental.Domain.Model;
 using BikeRental.Infrastructure.DataSeed;
 

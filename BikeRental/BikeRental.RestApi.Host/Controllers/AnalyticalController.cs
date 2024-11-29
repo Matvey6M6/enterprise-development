@@ -1,4 +1,5 @@
 ﻿using BikeRental.Contracts;
+using BikeRental.Contracts.Bike;
 using BikeRental.Contracts.Customer;
 using BikeRental.Contracts.Rent;
 using BikeRental.Domain.Enums;
@@ -16,7 +17,7 @@ namespace BikeRental.RestApi.Host.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class AnalyticalController(
-    ICrudService<Bike, Bike, int> bikeService,
+    ICrudService<BikeDto, BikeCreateUpdateDto, int> bikeService,
     ICrudService<CustomerDto, CustomerCreateUpdateDto, int> customerService,
     ICrudService<RentDto, RentCreateUpdateDto, int> rentService)
     : ControllerBase
@@ -27,7 +28,7 @@ public class AnalyticalController(
     /// Вывести информацию обо всех спортивных велосипедах.
     /// </summary>
     [HttpGet("sport-bikes")]
-    public async Task<IActionResult> GetAllSportBikes(CancellationToken cancellationToken)
+    public async Task<ActionResult> GetAllSportBikes(CancellationToken cancellationToken)
     {
         var bikes = await bikeService.GetList(cancellationToken);
         var sportBikes = bikes.Where(b => b.Type == BikeType.Sport).ToList();
@@ -38,7 +39,7 @@ public class AnalyticalController(
     /// Вывести информацию обо всех клиентах, которые брали в аренду горные велосипеды, упорядочить по ФИО.
     /// </summary>
     [HttpGet("customers-with-mountain-bikes")]
-    public async Task<IActionResult> GetCustomersWithMountainBikesSortedByName(CancellationToken cancellationToken)
+    public async Task<ActionResult> GetCustomersWithMountainBikesSortedByName(CancellationToken cancellationToken)
     {
         var rents = await rentService.GetList(cancellationToken);
         var bikes = await bikeService.GetList(cancellationToken);
@@ -69,7 +70,7 @@ public class AnalyticalController(
     /// Вывести суммарное время аренды велосипедов каждого типа.
     /// </summary>
     [HttpGet("rental-time-by-bike-type")]
-    public async Task<IActionResult> GetTotalRentalTimeByBikeType(CancellationToken cancellationToken)
+    public async Task<ActionResult> GetTotalRentalTimeByBikeType(CancellationToken cancellationToken)
     {
         var rents = await rentService.GetList(cancellationToken);
         var bikes = await bikeService.GetList(cancellationToken);
@@ -93,7 +94,7 @@ public class AnalyticalController(
     /// Вывести информацию о клиентах, бравших велосипеды на прокат больше всего раз.
     /// </summary>
     [HttpGet("customers-with-most-rentals")]
-    public async Task<IActionResult> GetCustomersWithMostRentals(CancellationToken cancellationToken)
+    public async Task<ActionResult> GetCustomersWithMostRentals(CancellationToken cancellationToken)
     {
         var rents = await rentService.GetList(cancellationToken);
         var customers = await customerService.GetList(cancellationToken);
@@ -122,7 +123,7 @@ public class AnalyticalController(
     /// Вывести информацию о топ 5 наиболее часто арендуемых велосипедов.
     /// </summary>
     [HttpGet("top-5-most-rented-bikes")]
-    public async Task<IActionResult> GetTop5MostRentedBikes(CancellationToken cancellationToken)
+    public async Task<ActionResult> GetTop5MostRentedBikes(CancellationToken cancellationToken)
     {
         var rents = await rentService.GetList(cancellationToken);
         var bikes = await bikeService.GetList(cancellationToken);
@@ -142,7 +143,7 @@ public class AnalyticalController(
     /// Вывести информацию о минимальном, максимальном и среднем времени аренды велосипедов.
     /// </summary>
     [HttpGet("min-max-average-rental-time")]
-    public async Task<IActionResult> GetMinMaxAverageRentalTime(CancellationToken cancellationToken)
+    public async Task<ActionResult> GetMinMaxAverageRentalTime(CancellationToken cancellationToken)
     {
         var rents = await rentService.GetList(cancellationToken);
         var rentalTimes = rents

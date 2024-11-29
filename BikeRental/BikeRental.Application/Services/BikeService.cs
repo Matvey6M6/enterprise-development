@@ -1,53 +1,33 @@
-﻿using BikeRental.Contracts;
+﻿using AutoMapper;
+using BikeRental.Contracts;
+using BikeRental.Contracts.Bike;
+using BikeRental.Domain.Interfaces;
 using BikeRental.Domain.Model;
 
 namespace BikeRental.Application.Services;
 
-public class BikeService(IRepository<Bike, int> bikeRepository) : ICrudService<Bike, Bike, int>
+public class BikeService(IRepository<Bike, int> bikeRepository, IMapper mapper) : ICrudService<BikeDto, BikeCreateUpdateDto, int>
 {
-    public async Task<Bike> Create(Bike newDto, CancellationToken cancellationToken)
+    public async Task<BikeDto> Create(BikeCreateUpdateDto newDto, CancellationToken cancellationToken)
     {
-        var bike = new Bike
-        {
-            SerialNumber = newDto.SerialNumber,
-            Type = newDto.Type,
-            Model = newDto.Model,
-            Color = newDto.Color,
-            CostPerPrice = newDto.CostPerPrice
-        };
-
+        var bike = mapper.Map<Bike>(newDto);
         await bikeRepository.Add(bike);
-        return new Bike
-        {
-            SerialNumber = bike.SerialNumber,
-            Type = bike.Type,
-            Model = bike.Model,
-            Color = bike.Color,
-            CostPerPrice = bike.CostPerPrice
-        };
+        return mapper.Map<BikeDto>(bike);
     }
 
-    public async Task<Bike> Update(int key, Bike newDto, CancellationToken cancellationToken)
+    public async Task<BikeDto> Update(int key, BikeCreateUpdateDto newDto, CancellationToken cancellationToken)
     {
         var bike = await bikeRepository.GetByKey(key);
 
         if (bike == null)
             throw new KeyNotFoundException("Bike not found.");
 
-        bike.Type = newDto.Type;
-        bike.Model = newDto.Model;
-        bike.Color = newDto.Color;
-        bike.CostPerPrice = newDto.CostPerPrice;
+        var mappedModel = mapper.Map<Bike>(newDto);
+
+        bike = mappedModel;
 
         await bikeRepository.Update(key, bike);
-        return new Bike
-        {
-            SerialNumber = bike.SerialNumber,
-            Type = bike.Type,
-            Model = bike.Model,
-            Color = bike.Color,
-            CostPerPrice = bike.CostPerPrice
-        };
+        return mapper.Map<BikeDto>(bike);
     }
 
     public async Task<bool> Delete(int id, CancellationToken cancellationToken)
@@ -60,32 +40,18 @@ public class BikeService(IRepository<Bike, int> bikeRepository) : ICrudService<B
         return true;
     }
 
-    public async Task<IList<Bike>> GetList(CancellationToken cancellationToken)
+    public async Task<IList<BikeDto>> GetList(CancellationToken cancellationToken)
     {
         var bikes = await bikeRepository.GetAsList();
-        return bikes.Select(bike => new Bike
-        {
-            SerialNumber = bike.SerialNumber,
-            Type = bike.Type,
-            Model = bike.Model,
-            Color = bike.Color,
-            CostPerPrice = bike.CostPerPrice
-        }).ToList();
+        return bikes.Select(bike => mapper.Map<BikeDto>(bike)).ToList();
     }
 
-    public async Task<Bike?> GetById(int id, CancellationToken cancellationToken)
+    public async Task<BikeDto?> GetById(int id, CancellationToken cancellationToken)
     {
         var bike = await bikeRepository.GetByKey(id);
         if (bike == null)
             return null;
 
-        return new Bike
-        {
-            SerialNumber = bike.SerialNumber,
-            Type = bike.Type,
-            Model = bike.Model,
-            Color = bike.Color,
-            CostPerPrice = bike.CostPerPrice
-        };
+        return mapper.Map<BikeDto>(bike);
     }
 }
