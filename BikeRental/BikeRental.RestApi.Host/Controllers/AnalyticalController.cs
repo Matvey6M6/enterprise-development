@@ -1,4 +1,5 @@
 ﻿using BikeRental.Contracts;
+using BikeRental.Contracts.AnalyticalDtos;
 using BikeRental.Contracts.Bike;
 using BikeRental.Contracts.Customer;
 using BikeRental.Contracts.Rent;
@@ -79,12 +80,11 @@ public class AnalyticalController(
         var totalRentalTimeByType = rents
             .Where(r => r.BikeId != null)
             .GroupBy(r => bikeTypeDictionary[r.BikeId!.Value])
-            .Select(g => new
-            {
-                BikeType = g.Key,
-                TotalTime = g.Sum(r
+            .Select(g => new TotalRentalTimeByBikeDto(
+                g.Key,
+                g.Sum(r
                     => r is { End: not null, Start: not null } ? (r.End!.Value - r.Start!.Value).TotalHours : 0)
-            })
+            ))
             .ToList();
 
         return Ok(totalRentalTimeByType);
@@ -154,12 +154,7 @@ public class AnalyticalController(
         var maxTime = rentalTimes.Max();
         var averageTime = rentalTimes.Average();
 
-        var result = new
-        {
-            MinTime = minTime,
-            MaxTime = maxTime,
-            AverageTime = averageTime
-        };
+        var result = new MinMaxAverageRentalTimeDto(minTime, maxTime, averageTime);
 
         return Ok(result);
     }
