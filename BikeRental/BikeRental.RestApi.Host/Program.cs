@@ -1,4 +1,3 @@
-
 using System.Reflection;
 using AutoMapper;
 using BikeRental.Application;
@@ -10,6 +9,7 @@ using BikeRental.Contracts.Rent;
 using BikeRental.Domain.Interfaces;
 using BikeRental.Domain.Model;
 using BikeRental.Infrastructure.DatabaseConfiguration;
+using BikeRental.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +33,7 @@ builder.Services.AddDbContext<BikeRentMySqlContext>(options =>
             ));
 });
 
+// AutoMapper
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new ContractsMappingProfile()));
 var mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);

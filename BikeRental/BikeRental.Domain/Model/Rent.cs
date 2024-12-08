@@ -15,14 +15,14 @@ public class Rent
     /// <summary>
     /// Велосипед, который был арендован
     /// </summary>
-    public Bike? Bike { get; set; }
+    public Bike Bike { get; set; }
 
     public required int CustomerId { get; set; }
 
     /// <summary>
     /// Клиент, арендовавший велосипед
     /// </summary>
-    public Customer? Customer { get; set; }
+    public Customer Customer { get; set; }
 
     /// <summary>
     /// Дата и время начала аренды.
