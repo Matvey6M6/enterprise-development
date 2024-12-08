@@ -1,38 +1,31 @@
-namespace BikeRental.Domain.Model;
+﻿namespace BikeRental.Contracts.Rent;
 
-/// <summary>
-/// Представляет запись об аренде велосипеда
-/// </summary>
-public class Rent
+public class RentDto
 {
     /// <summary>
     /// Уникальный идентификатор записи об аренде
     /// </summary>
     public int Id { get; set; }
 
-    public required int BikeId { get; set; }
-
     /// <summary>
     /// Велосипед, который был арендован
     /// </summary>
-    public Bike? Bike { get; set; }
-
-    public required int CustomerId { get; set; }
+    public int? BikeId { get; set; }
 
     /// <summary>
     /// Клиент, арендовавший велосипед
     /// </summary>
-    public Customer? Customer { get; set; }
+    public int? CustomerId { get; set; }
 
     /// <summary>
     /// Дата и время начала аренды.
     /// По умолчанию устанавливается в текущее время
     /// </summary>
-    public required DateTime Start { get; set; } = DateTime.Now;
+    public required DateTime? Start { get; set; }
 
     /// <summary>
     /// Дата и время окончания аренды
     /// По умолчанию устанавливается аренда на час
     /// </summary>
-    public required DateTime End { get; set; } = DateTime.Now.AddHours(1);
+    public required DateTime? End { get; set; }
 }
