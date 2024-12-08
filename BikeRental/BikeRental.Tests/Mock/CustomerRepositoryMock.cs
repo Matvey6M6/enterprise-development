@@ -1,11 +1,10 @@
-﻿using BikeRental.Contracts;
-using BikeRental.Domain.Interfaces;
+﻿using BikeRental.Domain.Interfaces;
 using BikeRental.Domain.Model;
 using BikeRental.Infrastructure.DataSeed;
 
-namespace BikeRental.Infrastructure.Repository.Mock;
+namespace BikeRental.Tests.Mock;
 
-public class CustomerRepositoryMock: IRepository<Customer, int>
+public class CustomerRepositoryMock : IRepository<Customer, int>
 {
     private static readonly List<Customer> Customers = BikeRentalSeeder.GetCustomers();
 
