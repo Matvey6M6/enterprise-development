@@ -1,12 +1,13 @@
 ﻿using BikeRental.Domain.Interfaces;
 using BikeRental.Domain.Model;
 using BikeRental.Infrastructure.DataSeed;
+using BikeRental.Tests.TestDataSeed;
 
 namespace BikeRental.Tests.Mock;
 
 public class CustomerRepositoryMock : IRepository<Customer, int>
 {
-    private static readonly List<Customer> Customers = BikeRentalSeeder.GetCustomers();
+    private static readonly List<Customer> Customers = TestBikeRentalSeeder.GetCustomers();
 
     public Task<List<Customer>> GetAsList()
     {
