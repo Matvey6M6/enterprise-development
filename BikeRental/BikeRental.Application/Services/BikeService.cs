@@ -20,7 +20,7 @@ public class BikeService(IRepository<Bike, int> bikeRepository, IMapper mapper) 
         var bike = await bikeRepository.GetByKey(key);
 
         if (bike == null)
-            throw new KeyNotFoundException("Bike not found.");
+            throw new KeyNotFoundException("Велосипед не найден.");
 
         var mappedModel = mapper.Map<Bike>(newDto);
 
