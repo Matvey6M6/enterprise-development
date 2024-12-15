@@ -1,5 +1,6 @@
 ﻿using BikeRental.Domain.Model;
 using BikeRental.Infrastructure.DataSeed;
+using BikeRental.Tests.TestDataSeed;
 
 namespace BikeRental.Tests.Fixture;
 
@@ -11,9 +12,9 @@ public class TestFixture
 
     public TestFixture()
     {
-        Bikes = BikeRentalSeeder.GetBikes();
-        Rents = BikeRentalSeeder.GetRents();
-        Customers = BikeRentalSeeder.GetCustomers();
+        Bikes = TestBikeRentalSeeder.GetBikes();
+        Rents = TestBikeRentalSeeder.GetRents();
+        Customers = TestBikeRentalSeeder.GetCustomers();
     }
 }
 

@@ -1,4 +1,5 @@
 using BikeRental.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace BikeRental.Domain.Model;
 
@@ -7,6 +8,7 @@ namespace BikeRental.Domain.Model;
 /// </summary>
 public class Bike
 {
+    [Key]
     /// <summary>
     /// Уникальный серийный номер велосипеда.
     /// </summary>
