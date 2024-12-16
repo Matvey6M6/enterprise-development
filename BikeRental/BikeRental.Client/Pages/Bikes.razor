@@ -1,0 +1,151 @@
+﻿@page "/bikes"
+@inject IBikeRentalClientWrapper bikeRentalClient
+
+@using BikeRental.Client.Api
+@using System.Threading.Tasks
+@using Microsoft.AspNetCore.Components
+
+<PageTitle>Bike Management</PageTitle>
+
+<h3>Bikes</h3>
+
+<button class="btn btn-primary" @onclick="ShowAddBikeModal">Add Bike</button>
+
+<Table>
+    <thead>
+        <tr>
+            <th>Serial Number</th>
+            <th>Type</th>
+            <th>Model</th>
+            <th>Color</th>
+            <th>Cost per Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var bike in BikesList)
+        {
+            <tr>
+                <td>@bike.SerialNumber</td>
+                <td>@bike.Type</td>
+                <td>@bike.Model</td>
+                <td>@bike.Color</td>
+                <td>@bike.CostPerPrice</td>
+                <td>
+                    <button class="btn btn-secondary" @onclick="() => ShowEditBikeModal(bike)">Edit</button>
+                    <button class="btn btn-danger" @onclick="() => DeleteBike(bike.SerialNumber.Value)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</Table>
+
+<!-- Модальное окно для добавления/редактирования велосипеда -->
+<Modal @ref="modalRef" @onclose="HideModal" style="background-color:white">
+    <ModalHeader>
+        <h5>@ModalTitle</h5>
+    </ModalHeader>
+    <ModalBody>
+        <EditForm Model="@CurrentBike" OnValidSubmit="HandleSubmit">
+            <DataAnnotationsValidator />
+
+            <div class="form-group">
+                <label for="serialNumber">Serial Number</label>
+                <InputNumber id="serialNumber" class="form-control" @bind-Value="CurrentBike.SerialNumber" disabled="@IsDisabled" />
+            </div>
+
+            <div class="form-group">
+                <label for="type">Type</label>
+                <InputSelect id="type" class="form-control" @bind-Value="CurrentBike.Type">
+                    @foreach (var n in Enum.GetNames(typeof(BikeType)))
+                    {
+                        <option value="@n">@n</option>
+                    }
+                </InputSelect>
+            </div>
+
+            <div class="form-group">
+                <label for="model">Model</label>
+                <InputText id="model" class="form-control" @bind-Value="CurrentBike.Model" />
+            </div>
+
+            <div class="form-group">
+                <label for="color">Color</label>
+                <InputText id="color" class="form-control" @bind-Value="CurrentBike.Color" />
+            </div>
+
+            <div class="form-group">
+                <label for="costPerPrice">Cost per Price</label>
+                <InputNumber id="costPerPrice" class="form-control" @bind-Value="CurrentBike.CostPerPrice" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button class="btn btn-secondary" @onclick="HideModal">Cancel</button>
+        </EditForm>
+    </ModalBody>
+</Modal>
+
+@code {
+    private IList<BikeDto> BikesList = new List<BikeDto>();
+    private BikeCreateUpdateDto CurrentBike = new BikeCreateUpdateDto();
+    private Modal? modalRef;
+    private string ModalTitle { get; set; } = "Add Bike";
+    private bool IsDisabled => ModalTitle != "Add Bike";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadBikes();
+    }
+
+    private async Task LoadBikes()
+    {
+        BikesList = await bikeRentalClient.GetAllBikes();
+    }
+
+    private void ShowAddBikeModal()
+    {
+        ModalTitle = "Add Bike";
+        CurrentBike = new BikeCreateUpdateDto();
+        modalRef!.Show();
+    }
+
+    private void ShowEditBikeModal(BikeDto bike)
+    {
+        ModalTitle = "Edit Bike";
+        CurrentBike = new BikeCreateUpdateDto
+        {
+            SerialNumber = bike.SerialNumber,
+            Type = bike.Type,
+            Model = bike.Model,
+            Color = bike.Color,
+            CostPerPrice = bike.CostPerPrice
+        };
+        modalRef!.Show();
+    }
+
+    private void HideModal()
+    {
+        modalRef!.Hide();
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (CurrentBike.SerialNumber.HasValue && CurrentBike.SerialNumber.Value > 0 && ModalTitle == "Edit Bike" && CurrentBike != null)
+        {
+            await bikeRentalClient.UpdateBike(CurrentBike.SerialNumber.Value, CurrentBike);
+        }
+        else if (CurrentBike.SerialNumber.HasValue && CurrentBike.SerialNumber.Value > 0 && ModalTitle == "Add Bike")
+        {
+            await bikeRentalClient.CreateBike(CurrentBike);
+        }
+
+        HideModal();
+        await LoadBikes();
+    }
+
+    private async Task DeleteBike(int serialNumber)
+    {
+        await bikeRentalClient.DeleteBike(serialNumber);
+        await LoadBikes();
+    }
+}
