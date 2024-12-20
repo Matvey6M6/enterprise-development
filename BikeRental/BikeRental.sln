@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeRental.Application", "B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeRental.RestApi.Host", "BikeRental.RestApi.Host\BikeRental.RestApi.Host.csproj", "{3399842D-DEAA-44F2-A1FA-2091F3EFCE9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeRental.Client", "BikeRental.Client\BikeRental.Client.csproj", "{16689749-C7A6-4671-8AB3-D4B71663AEBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeRental.Client", "BikeRental.Client\BikeRental.Client.csproj", "{16689749-C7A6-4671-8AB3-D4B71663AEBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

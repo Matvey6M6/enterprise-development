@@ -33,7 +33,7 @@
                 <td>@bike.CostPerPrice</td>
                 <td>
                     <button class="btn btn-secondary" @onclick="() => ShowEditBikeModal(bike)">Edit</button>
-                    <button class="btn btn-danger" @onclick="() => DeleteBike(bike.SerialNumber.Value)">Delete</button>
+                    <button class="btn btn-danger" @onclick="() => DeleteBike(bike?.SerialNumber ?? -1)">Delete</button>
                 </td>
             </tr>
         }
@@ -134,7 +134,7 @@
         {
             await bikeRentalClient.UpdateBike(CurrentBike.SerialNumber.Value, CurrentBike);
         }
-        else if (CurrentBike.SerialNumber.HasValue && CurrentBike.SerialNumber.Value > 0 && ModalTitle == "Add Bike")
+        else if (CurrentBike?.SerialNumber != null && CurrentBike.SerialNumber.Value > 0 && ModalTitle == "Add Bike")
         {
             await bikeRentalClient.CreateBike(CurrentBike);
         }

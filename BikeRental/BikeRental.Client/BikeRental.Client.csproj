@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="Api\swagger.json" CodeGenerator="NSwagCSharp" ClassName="BikeRentalClient" />
+    <OpenApiReference Include="Api\swagger.json" ClassName="BikeRentalClient" CodeGenerator="NSwagCSharp" />
   </ItemGroup>
 
 </Project>

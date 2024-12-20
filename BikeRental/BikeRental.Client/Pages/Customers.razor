@@ -1,0 +1,131 @@
+﻿@page "/customers"
+@inject IBikeRentalClientWrapper bikeRentalClient
+
+@using BikeRental.Client.Api
+@using System.Threading.Tasks
+@using Microsoft.AspNetCore.Components
+
+<PageTitle>Customer Management</PageTitle>
+
+<h3>Customers</h3>
+
+<button class="btn btn-primary" @onclick="ShowAddCustomerModal">Add Customer</button>
+
+<Table>
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Birth Date</th>
+            <th>Phone Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in CustomersList)
+        {
+            <tr>
+                <td>@customer.FullName</td>
+                <td>@customer.BirthDate?.ToString("dd/MM/yyyy")</td>
+                <td>@customer.PhoneNumber</td>
+                <td>
+                    <button class="btn btn-secondary" @onclick="() => ShowEditCustomerModal(customer)">Edit</button>
+                    <button class="btn btn-danger" @onclick="() => DeleteCustomer(customer.Id ?? -1)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</Table>
+
+<!-- Модальное окно для добавления/редактирования клиента -->
+<Modal @ref="modalRef" @onclose="HideModal" style="background-color:white">
+    <ModalHeader>
+        <h5>@ModalTitle</h5>
+    </ModalHeader>
+    <ModalBody>
+        <EditForm Model="@CurrentCustomer" OnValidSubmit="HandleSubmit">
+            <DataAnnotationsValidator />
+
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <InputText id="fullName" class="form-control" @bind-Value="CurrentCustomer.FullName" />
+            </div>
+
+            <div class="form-group">
+                <label for="birthDate">Birth Date</label>
+                <InputDate id="birthDate" class="form-control" @bind-Value="CurrentCustomer.BirthDate" />
+            </div>
+
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <InputText id="phoneNumber" class="form-control" @bind-Value="CurrentCustomer.PhoneNumber" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button class="btn btn-secondary" @onclick="HideModal">Cancel</button>
+        </EditForm>
+    </ModalBody>
+</Modal>
+
+@code {
+    private IList<CustomerDto> CustomersList = new List<CustomerDto>();
+    private CustomerCreateUpdateDto CurrentCustomer = new CustomerCreateUpdateDto();
+    private Modal? modalRef;
+    private string ModalTitle { get; set; } = "Add Customer";
+    private int? EditingCustomerId { get; set; } = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCustomers();
+    }
+
+    private async Task LoadCustomers()
+    {
+        CustomersList = await bikeRentalClient.GetAllCustomers();
+    }
+
+    private void ShowAddCustomerModal()
+    {
+        ModalTitle = "Add Customer";
+        CurrentCustomer = new CustomerCreateUpdateDto();
+        modalRef!.Show();
+    }
+
+    private void ShowEditCustomerModal(CustomerDto customer)
+    {
+        ModalTitle = "Edit Customer";
+        CurrentCustomer = new CustomerCreateUpdateDto
+            {
+                FullName = customer.FullName,
+                BirthDate = customer.BirthDate ?? DateTimeOffset.Now,
+                PhoneNumber = customer.PhoneNumber
+            };
+        EditingCustomerId = customer.Id;
+        modalRef!.Show();
+    }
+
+    private void HideModal()
+    {
+        modalRef!.Hide();
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (CurrentCustomer != null && ModalTitle == "Edit Customer" && CurrentCustomer?.BirthDate != null && EditingCustomerId.HasValue)
+        {
+            await bikeRentalClient.UpdateCustomer(EditingCustomerId.Value, CurrentCustomer);
+        }
+        else if (CurrentCustomer != null && ModalTitle == "Add Customer" && CurrentCustomer?.BirthDate != null)
+        {
+            await bikeRentalClient.CreateCustomer(CurrentCustomer);
+        }
+
+        HideModal();
+        await LoadCustomers();
+    }
+
+    private async Task DeleteCustomer(int id)
+    {
+        await bikeRentalClient.DeleteCustomer(id);
+        await LoadCustomers();
+    }
+}

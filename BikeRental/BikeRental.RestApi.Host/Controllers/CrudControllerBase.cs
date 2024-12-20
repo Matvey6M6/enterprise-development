@@ -13,7 +13,7 @@ namespace BikeRental.RestApi.Host.Controllers;
 /// <param name="logger">Служба журналирования</param>
 [Route("api/[controller]")]
 [ApiController]
-public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(ICrudService<TDto,TCreateUpdateDto, TKey> crudService, 
+public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(ICrudService<TDto, TCreateUpdateDto, TKey> crudService,
     ILogger<CrudControllerBase<TDto, TCreateUpdateDto, TKey>> logger) : ControllerBase
     where TDto : class
     where TCreateUpdateDto : class
@@ -37,7 +37,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(ICrudServ
             logger.LogInformation("{method} method of {controller} executed successfully", nameof(Create), GetType().Name);
             return CreatedAtAction(nameof(this.Create), res);
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             logger.LogError("An exception happened during {method} method of {controller}: {@exception}", nameof(Create), GetType().Name, ex);
             return StatusCode(500, $"{ex.Message}\n\r{ex.InnerException?.Message}");

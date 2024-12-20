@@ -20,7 +20,7 @@ public class CustomerService(IRepository<Customer, int> CustomerRepository, IMap
     {
         var customer = Mapper.Map<Customer>(newDto);
         await CustomerRepository.Update(key, customer);
-        var newbie = await CustomerRepository.GetByKey(customer.Id);
+        var newbie = await CustomerRepository.GetByKey(key);
         return Mapper.Map<CustomerDto>(newbie);
     }
 
